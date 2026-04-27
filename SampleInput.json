@@ -1,0 +1,69 @@
+﻿{
+  "personalInformation": {
+    "employeeId": null,
+    "name": null,
+    "age": null,
+    "gender": null,
+    "companyName": null,
+    "department": null,
+    "designation": null,
+    "descent": null,
+    "mobile": null,
+    "email": null
+  },
+  "familyMedicalHistory": {
+    "parentsOrGrandparentsBP_Sugar_Cardiac": null,
+    "familyMedicalReason": null
+  },
+  "medicalDetails": {
+    "bloodPressureSystolic": null,
+    "bloodPressureDiastolic": null,
+    "bloodSugarFasting": null,
+    "bloodSugarRandom": null,
+    "currentMedication": null,
+    "medicationReason": null,
+    "totalCholesterol": null
+  },
+  "physicalTests": {
+    "height": null,
+    "weight": null,
+    "pulse": null,
+    "waist": null,
+    "breathRetention": null,
+    "peakFlow": null
+  },
+  "vision": {
+    "rightEyeDistance": null,
+    "leftEyeDistance": null,
+    "rightEyeNear": null,
+    "leftEyeNear": null,
+    "colorVisionRightEye": null,
+    "colorVisionLeftEye": null
+  },
+  "hearing": {
+    "rightEar": null,
+    "leftEar": null
+  },
+  "lifestyle": {
+    "dailyFruitsOrVegetables": null,
+    "milkCurdEggsWeekly": null,
+    "waterIntakeGlassesPerDay": null,
+    "frequentJunkFood": null,
+    "dailyExercise": null,
+    "toeTouch": null,
+    "pushUpsSitUps": null,
+    "jobSatisfaction": null,
+    "goodHomeSituation": null,
+    "majorProblems": null,
+    "sufficientSleep": null,
+    "alcoholConsumption": null,
+    "smoking": null,
+    "oralTobacco": null,
+    "safetyConsciousness": null,
+    "insuranceProvided": null,
+    "annualHealthScreening": null,
+    "healthyCanteen": null,
+    "sportsFacility": null,
+    "healthEducation": null
+  }
+}
