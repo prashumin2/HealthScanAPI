@@ -24,3 +24,4 @@ NEED INFORMATION
 1. DB Connection string
 2. Need Understanding as to what is the InsertPO, InsertPPS, InsertPLS and InsertMT stored procedures do. Coding done on assumption that everything will be
    in JSON input which may not be the case.
+3. What null handles are needed?
