@@ -72,6 +72,120 @@ namespace HealthScanAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("insertPO")]
+        public IHttpActionResult InsertPO([FromBody] JObject data)
+        {
+            if (data == null)
+                return BadRequest("Invalid JSON");
+
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3", data.SelectToken("po.Q3")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4", data.SelectToken("po.Q4")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5", data.SelectToken("po.Q5")?.Value<string>() ?? "SAUDI")
+            };
+
+
+            var result = CommonStoredProcedureMethod("usp_InsertPO", parameters.ToArray());
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("insertPLS")]
+        public IHttpActionResult InsertPLS([FromBody] JObject data)
+        {
+            if (data == null)
+                return BadRequest("Invalid JSON");
+
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3", data.SelectToken("po.Q3")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4", data.SelectToken("po.Q4")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5", data.SelectToken("po.Q5")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q6", data.SelectToken("po.Q6")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q7", data.SelectToken("po.Q7")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q8", data.SelectToken("po.Q8")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q9", data.SelectToken("po.Q9")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q10", data.SelectToken("po.Q10")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q11", data.SelectToken("po.Q11")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q12", data.SelectToken("po.Q12")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q13", data.SelectToken("po.Q13")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q14", data.SelectToken("po.Q14")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q15", data.SelectToken("po.Q15")?.Value<string>() ?? "SAUDI")
+            };
+
+
+            var result = CommonStoredProcedureMethod("usp_InsertPLS", parameters.ToArray());
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("insertPPS")]
+        public IHttpActionResult InsertPPS([FromBody] JObject data)
+        {
+            if (data == null)
+                return BadRequest("Invalid JSON");
+
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3", data.SelectToken("po.Q3")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4", data.SelectToken("po.Q4")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5", data.SelectToken("po.Q5")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q6", data.SelectToken("po.Q6")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1R", data.SelectToken("po.Q1R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2R", data.SelectToken("po.Q2R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3R", data.SelectToken("po.Q3R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4R", data.SelectToken("po.Q4R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5R", data.SelectToken("po.Q5R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q6R", data.SelectToken("po.Q6R")?.Value<string>() ?? "SAUDI")
+            };
+
+
+            var result = CommonStoredProcedureMethod("usp_InsertPPS", parameters.ToArray());
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("insertMT")]
+        public IHttpActionResult InsertMT([FromBody] JObject data)
+        {
+            if (data == null)
+                return BadRequest("Invalid JSON");
+
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QTC", data.SelectToken("po.QTC")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBP1", data.SelectToken("po.QBP1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBP2", data.SelectToken("po.QBP2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBS1", data.SelectToken("po.QBS1")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBS2", data.SelectToken("po.QBS2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2R", data.SelectToken("po.Q2R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1R", data.SelectToken("po.Q1R")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2Rs", data.SelectToken("po.Q2Rs")?.Value<string>() ?? "SAUDI"),
+            };
+
+
+            var result = CommonStoredProcedureMethod("usp_InsertMT", parameters.ToArray());
+
+            return Ok(result);
+        }
+
         private object CommonStoredProcedureMethod(string spName, params SqlParameter[] parameters)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["HealthScanDB"].ConnectionString;
