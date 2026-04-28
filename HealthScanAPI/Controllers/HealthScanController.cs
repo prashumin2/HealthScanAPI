@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Http;
@@ -73,9 +74,10 @@ namespace HealthScanAPI.Controllers
 
         private object CommonStoredProcedureMethod(string spName, params SqlParameter[] parameters)
         {
+            var connectionString = ConfigurationManager.ConnectionStrings["HealthScanDB"].ConnectionString;
             var dt = new DataTable();
 
-            using (SqlConnection con = new SqlConnection(""))
+            using (SqlConnection con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(spName, con))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
