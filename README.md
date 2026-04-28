@@ -11,6 +11,8 @@ TASKS THAT ARE DONE
 
 GOOD TO HAVE
 1. DataModels for input and output for each method.
+2. Swagger Implementation
+3. Authentication
 
 NEXT STEPS/ CURRENTLY WORKING ON
 1. 4 Methods to be added based on 4 stored procedures.
