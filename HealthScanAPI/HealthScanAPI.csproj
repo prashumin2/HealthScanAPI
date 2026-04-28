@@ -155,11 +155,20 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\HealthScanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\InputJSONModels\HearingModel.cs" />
+    <Compile Include="Models\InputJSONModels\FamilyMedicalHistory.cs" />
+    <Compile Include="Models\InputJSONModels\InputJsonModel.cs" />
+    <Compile Include="Models\InputJSONModels\LifestyleModel.cs" />
+    <Compile Include="Models\InputJSONModels\PhysicalTestsModel.cs" />
+    <Compile Include="Models\InputJSONModels\MedicalDetailsModel.cs" />
+    <Compile Include="Models\InputJSONModels\PersonalInformationModel.cs" />
+    <Compile Include="Models\InputJSONModels\VisionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,7 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\HealthScan\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
