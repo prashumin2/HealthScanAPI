@@ -22,7 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-[Pp]ackages/
+packages/
 
 # .NET Core
 project.lock.json
