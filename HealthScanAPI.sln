@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37203.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthScanAPI", "HealthScanAPI.csproj", "{BCC7085D-71A7-60C2-AD4F-5CBF9A56EA2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthScanAPI", "HealthScanAPI\HealthScanAPI.csproj", "{73008EC6-8709-437A-B53F-925E20534EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BCC7085D-71A7-60C2-AD4F-5CBF9A56EA2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCC7085D-71A7-60C2-AD4F-5CBF9A56EA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCC7085D-71A7-60C2-AD4F-5CBF9A56EA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCC7085D-71A7-60C2-AD4F-5CBF9A56EA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73008EC6-8709-437A-B53F-925E20534EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73008EC6-8709-437A-B53F-925E20534EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73008EC6-8709-437A-B53F-925E20534EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73008EC6-8709-437A-B53F-925E20534EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {EC801009-9D55-43E2-BF1B-161C293EA0B2}
+		SolutionGuid = {D916D3A0-4227-49F2-A397-76CD9BBC824B}
 	EndGlobalSection
 EndGlobal
