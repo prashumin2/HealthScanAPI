@@ -82,11 +82,11 @@ namespace HealthScanAPI.Controllers
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q3", data.SelectToken("po.Q3")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q4", data.SelectToken("po.Q4")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q5", data.SelectToken("po.Q5")?.Value<string>() ?? "SAUDI")
+                new SqlParameter("@Q1", data.SelectToken("lifestyle.insuranceProvided")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("lifestyle.annualHealthScreening")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3", data.SelectToken("lifestyle.healthyCanteen")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4", data.SelectToken("lifestyle.sportsFacility")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5", data.SelectToken("lifestyle.healthEducation")?.Value<string>() ?? "SAUDI")
             };
 
 
@@ -105,21 +105,21 @@ namespace HealthScanAPI.Controllers
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q3", data.SelectToken("po.Q3")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q4", data.SelectToken("po.Q4")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q5", data.SelectToken("po.Q5")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q6", data.SelectToken("po.Q6")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q7", data.SelectToken("po.Q7")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q8", data.SelectToken("po.Q8")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q9", data.SelectToken("po.Q9")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q10", data.SelectToken("po.Q10")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q11", data.SelectToken("po.Q11")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q12", data.SelectToken("po.Q12")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q13", data.SelectToken("po.Q13")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q14", data.SelectToken("po.Q14")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q15", data.SelectToken("po.Q15")?.Value<string>() ?? "SAUDI")
+                new SqlParameter("@Q1", data.SelectToken("lifestyle.dailyFruitsOrVegetables")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("lifestyle.milkCurdEggsWeekly")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q3", data.SelectToken("lifestyle.waterIntakeGlassesPerDay")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q4", data.SelectToken("lifestyle.frequentJunkFood")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q5", data.SelectToken("lifestyle.dailyExercise")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q6", data.SelectToken("lifestyle.toeTouch")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q7", data.SelectToken("lifestyle.pushUpsSitUps")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q8", data.SelectToken("lifestyle.jobSatisfaction")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q9", data.SelectToken("lifestyle.goodHomeSituation")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q10", data.SelectToken("lifestyle.majorProblems")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q11", data.SelectToken("lifestyle.sufficientSleep")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q12", data.SelectToken("lifestyle.alcoholConsumption")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q13", data.SelectToken("lifestyle.smoking")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q14", data.SelectToken("lifestyle.oralTobacco")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q15", data.SelectToken("lifestyle.safetyConsciousness")?.Value<string>() ?? "SAUDI")
             };
 
 
@@ -168,16 +168,16 @@ namespace HealthScanAPI.Controllers
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@regid", data.SelectToken("po.regid")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q1", data.SelectToken("po.Q1")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@QTC", data.SelectToken("po.QTC")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@QBP1", data.SelectToken("po.QBP1")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@QBP2", data.SelectToken("po.QBP2")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@QBS1", data.SelectToken("po.QBS1")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@QBS2", data.SelectToken("po.QBS2")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q2", data.SelectToken("po.Q2")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q2R", data.SelectToken("po.Q2R")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q1R", data.SelectToken("po.Q1R")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@Q2Rs", data.SelectToken("po.Q2Rs")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1", data.SelectToken("familyMedicalHistory.parentsOrGrandparentsBP_Sugar_Cardiac")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QTC", data.SelectToken("familyMedicalHistory.totalCholesterol")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBP1", data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBP2", data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBS1", data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@QBS2", data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2", data.SelectToken("medicalDetails.currentMedication")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2R", data.SelectToken("medicalDetails.medicationReason")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q1R", data.SelectToken("medicalDetails.familyMedicalReason")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@Q2Rs", data.SelectToken("medicalDetails.familyMedicalReason")?.Value<string>() ?? "SAUDI"),
             };
 
 
