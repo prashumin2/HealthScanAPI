@@ -1,4 +1,4 @@
-Last Update: 30/4/2026 01:30 HRS IST
+Last Update: 30/4/2026 02:15 HRS IST
 
 NOTE: SampleJSON file is the key. This file needs to be clearly given as to make modifications to the API.
 
@@ -12,20 +12,19 @@ TASKS THAT ARE DONE
 6. Sample ConnectionString added in web.config.
 7. GitIgnore now working properly.
 8. DB Connection now added in web.config
+9. Updated Workflow for README updates.
 
 
 GOOD TO HAVE
 1. DataModels for input and output for each method.
 2. Swagger Implementation
 3. Authentication
-4. Daily Readme Cron Job
-
-
-NEXT STEPS/ CURRENTLY WORKING ON
-None
 
 NEED INFORMATION
-1. Need the link values document of the stored procedure(s) and questionnaire.
+1. Need the link values document between the stored procedure(s) and questionnaire.
 2. Where will I get regid variable(s)?
 3. Need new updated/changed questionnaire.
 4. What null handles are needed?
+
+NEXT STEPS/ CURRENTLY WORKING ON
+NA
