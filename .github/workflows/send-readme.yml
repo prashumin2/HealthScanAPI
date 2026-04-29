@@ -25,4 +25,6 @@ jobs:
           from: prashumintu.kumar7@gmail.com
           body: |
             Please find today's README attached.
+            Regards,
+            Prashant Kumar
           attachments: README.md
