@@ -2,7 +2,7 @@ name: Send README Daily
 
 on:
   schedule:
-    - cron: '0 9 * * *'   # Runs daily at 9 AM UTC
+    - cron: '0 5 * * *'   # Runs daily at 9 AM UTC
   workflow_dispatch:      # Optional: manual trigger
 
 jobs:
@@ -20,9 +20,9 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Daily README"
-          to: person1@email.com, person2@email.com
-          from: Your Name
+          subject: "Daily README - Prashant Kumar"
+          to: saday_k@rediffmail.com
+          from: prashumintu.kumar7@gmail.com
           body: |
             Please find today's README attached.
           attachments: README.md
