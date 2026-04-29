@@ -21,10 +21,11 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Daily README - Prashant Kumar"
-          to: prashumintu.kumar7@gmail.com
+          to: saday_k@rediffmail.com
           from: prashumintu.kumar7@gmail.com
           body: |
-            Please find today's README attached.
+            Please find today's README from the git repo attached.
+
             Regards,
             Prashant Kumar
           attachments: README.md
