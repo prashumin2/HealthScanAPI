@@ -55,5 +55,4 @@ TestResult.xml
 nunit-*.xml
 
 #github/VS related
-.github/
 .vs/
