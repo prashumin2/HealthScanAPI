@@ -6,7 +6,7 @@ TASKS THAT ARE DONE
 1. Migrated to .net48 based on Srikanth instructions.
 2. Created a sampleJson file which may be changed in future. For now, code done assuming this as the input.
 3. Created Common SP Call Method which can be reused in every function.
-4. Created Dummy Model based on SampleJSON. If Confirmed input coming in Using this Model will be a better approach than using JObject as parameter both 
+4. Created Dummy Model based on SampleJSON. If input coming in is confirmed, Using this Model will be a better approach than using JObject as parameter both 
    from performance as well as cleanliness perspective.
 5. 6 methods based on input Json. Parameters to be changed in future, after understanding. 5 are fairly clear. need clarification on last one. 
 6. Sample ConnectionString added in web.config.
