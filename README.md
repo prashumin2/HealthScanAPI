@@ -18,6 +18,7 @@ GOOD TO HAVE
 1. DataModels for input and output for each method.
 2. Swagger Implementation
 3. Authentication
+4. Daily Readme Cron Job
 
 
 NEXT STEPS/ CURRENTLY WORKING ON
