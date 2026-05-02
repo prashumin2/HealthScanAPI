@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -18,20 +19,24 @@ namespace HealthScanAPI.Controllers
             if (data == null)
                 return BadRequest("Invalid JSON");
 
+            int age = data.SelectToken("personalInformation.age")?.Value<int>() ?? 0;
+            DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
+
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@cid", data.SelectToken("personalInformation.cid")?.Value<string>() ?? "SAUDI"),
-                new SqlParameter("@bid", data.SelectToken("personalInformation.bid")?.Value<string>() ?? "SAUDI"),
+                new SqlParameter("@cid", data.SelectToken("personalInformation.cid")?.Value<string>() ?? "8B3V4BVUS5"),
+                new SqlParameter("@bid", data.SelectToken("personalInformation.bid")?.Value<string>() ?? "BRA0002"),
                 new SqlParameter("@fname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
-                new SqlParameter("@lname", data.SelectToken("personalInformation.lname")?.Value<string>() ?? ""),
+                new SqlParameter("@lname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
                 new SqlParameter("@rmobile", data.SelectToken("personalInformation.mobile")?.Value<string>() ?? ""),
-                new SqlParameter("@rDOB", data.SelectToken("personalInformation.DOB")?.Value<string>() ?? ""),
+                new SqlParameter("@rDOB", DobSample),
                 new SqlParameter("@remail", data.SelectToken("personalInformation.email")?.Value<string>() ?? ""),
-                new SqlParameter("@rextmobile", data.SelectToken("personalInformation.mobile")?.Value<string>() ?? ""),
+                new SqlParameter("@rextmobile", data.SelectToken("personalInformation.extmobile")?.Value<string>() ?? ""),
                 new SqlParameter("@gender", data.SelectToken("personalInformation.gender")?.Value<string>() ?? ""),
                 new SqlParameter("@empid", data.SelectToken("personalInformation.employeeId")?.Value<string>() ?? ""),
                 new SqlParameter("@empidtype", data.SelectToken("personalInformation.empidtype")?.Value<string>() ?? ""),
-                new SqlParameter("@usertype", data.SelectToken("personalInformation.usertype")?.Value<string>() ?? "")
+                new SqlParameter("@usertype", data.SelectToken("personalInformation.usertype")?.Value<string>() ?? ""),
+                new SqlParameter("@passw", data.SelectToken("personalInformation.passw")?.Value<string>() ?? "")
             };
 
 
