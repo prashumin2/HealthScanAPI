@@ -35,7 +35,7 @@ namespace HealthScanAPI.Controllers
             };
 
 
-            var result = CommonStoredProcedureMethod("usp_registeruser", parameters.ToArray());
+            var result = CommonStoredProcedureMethod("usp_registeruserAPI", parameters.ToArray());
 
             return Ok(result);
         }
