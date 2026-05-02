@@ -12,8 +12,9 @@ TASKS THAT ARE DONE
 6. Sample ConnectionString added in web.config.
 7. GitIgnore now working properly.
 8. DB Connection now added in web.config
-9. Updated Workflow for README updates.
-
+9. Updated Workflow for README updates. Update will go to two people from now.
+10.Convert age into DOB in the Input JSON. 
+11.Test for 1 method (registerUser) completed.
 
 GOOD TO HAVE
 1. DataModels for input and output for each method.
@@ -22,9 +23,8 @@ GOOD TO HAVE
 
 NEED INFORMATION
 1. Need the link values document between the stored procedure(s) and questionnaire.
-2. Where will I get regid variable(s)?
-3. Need new updated/changed questionnaire.
-4. What null handles are needed?
+2. What null handles are needed?
+3. What is the final data output to be sent?
 
 NEXT STEPS/ CURRENTLY WORKING ON
 NA
