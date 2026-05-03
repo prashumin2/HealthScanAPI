@@ -22,33 +22,29 @@
     "bloodSugarRandom": null,
     "currentMedication": null,
     "medicationReason": null,
-    "totalCholesterol": null
+    "totalCholesterol": null,
+    "headache": null,
+    "headacheReason": null,
+    "respiratoryAilments": null,
+    "respiratoryAilmentsReason": null,
+    "musculoskeletalProblems": null,
+    "musculoskeletalProblemsReason": null
   },
   "physicalTests": {
     "height": null,
     "weight": null,
     "pulse": null,
     "waist": null,
-    "breathRetention": null,
-    "peakFlow": null
-  },
-  "vision": {
-    "rightEyeDistance": null,
-    "leftEyeDistance": null,
-    "rightEyeNear": null,
-    "leftEyeNear": null,
-    "colorVisionRightEye": null,
-    "colorVisionLeftEye": null
-  },
-  "hearing": {
-    "rightEar": null,
-    "leftEar": null
+    "breathRetention": null
   },
   "lifestyle": {
     "dailyFruitsOrVegetables": null,
     "milkCurdEggsWeekly": null,
+    "meatChickenFishWeekly": null,
     "waterIntakeGlassesPerDay": null,
+    "mineralVitaminSupplements": null,
     "frequentJunkFood": null,
+    "cerealsWeekly": null,
     "dailyExercise": null,
     "toeTouch": null,
     "pushUpsSitUps": null,
@@ -56,10 +52,17 @@
     "goodHomeSituation": null,
     "majorProblems": null,
     "sufficientSleep": null,
-    "alcoholConsumption": null,
+    "sheeshaVape": null,
     "smoking": null,
-    "oralTobacco": null,
-    "safetyConsciousness": null,
+    "oralTobacco": null
+  },
+  "mental": {
+    "nervous": null,
+    "worrying": null,
+    "intrest": null,
+    "feeling": null
+  },
+  "organization": {
     "insuranceProvided": null,
     "annualHealthScreening": null,
     "healthyCanteen": null,
