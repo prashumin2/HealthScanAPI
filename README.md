@@ -30,7 +30,7 @@ NEED INFORMATION
 2. What is the final data output to be sent?
 3. Variable Mapping(s) of questionnaire with with Tables. (Done right now based on what I understood.)
 
-ACTION ITEMS ON SRIKANTH
+ACTION ITEMS ON SRIKANTH/ SADAY
 1. Why is the Vape variable NOT used in usp_registeruserAPI (or) usp_registeruser storedproc.
 2. Awaiting document of which questionnaire linked with what column of tables.
 3. Review the storedproc usp_registeruserAPI as dataentry not working. I created a storedproc usp_registeruserAPITemp for it to work temporarily.
