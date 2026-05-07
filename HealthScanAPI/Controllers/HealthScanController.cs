@@ -60,6 +60,8 @@ namespace HealthScanAPI.Controllers
             DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
 
             string corporateId = "";
+            string branchId = "";
+
             string corporateToken = data.SelectToken("personalInformation.corporateId")?.Value<string>() ?? "";
             if (corporateToken != "")
             {
@@ -80,6 +82,7 @@ namespace HealthScanAPI.Controllers
                 {
                     CreateBranch(branchToken, corporateId);
                 }
+                branchId = _service.GetBranchId(branchToken).FirstOrDefault();
             }
             else return BadRequest("Branch ID is required");
 
@@ -283,8 +286,7 @@ namespace HealthScanAPI.Controllers
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@cid", corporateId),
-                //new SqlParameter("@bid", branchId),
-                new SqlParameter("@bid", data.SelectToken("personalInformation.bid")?.Value<string>() ?? "BRA0002"),
+                new SqlParameter("@bid", branchId),
                 new SqlParameter("@fname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
                 new SqlParameter("@lname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
                 new SqlParameter("@rmobile", data.SelectToken("personalInformation.mobile")?.Value<string>() ?? ""),
