@@ -86,7 +86,7 @@ namespace HealthScanAPI.Controllers
             }
             else return BadRequest("Branch ID is required");
 
-            return RegisterUser(data, corporateId, branchToken, DobSample);
+            return RegisterUser(data, corporateId, branchId, DobSample);
         }
 
         [HttpPost]
