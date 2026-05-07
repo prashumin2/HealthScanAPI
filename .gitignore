@@ -57,3 +57,4 @@ nunit-*.xml
 #github/VS related
 .github
 .vs/
+/HealthScanAPI/Properties/PublishProfiles
