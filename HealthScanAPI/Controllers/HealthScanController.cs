@@ -59,33 +59,31 @@ namespace HealthScanAPI.Controllers
             int age = data.SelectToken("personalInformation.age")?.Value<int>() ?? 0;
             DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
 
-            int cid = 0;
-            string corporateId = data.SelectToken("personalInformation.cid")?.Value<string>() ?? "";
-            if (corporateId != "")
+            string corporateId = "";
+            string corporateToken = data.SelectToken("personalInformation.corporateId")?.Value<string>() ?? "";
+            if (corporateToken != "")
             {
-                var corporateIds = _service.CheckCorporateNamePresent(corporateId);
+                var corporateIds = _service.CheckCorporateNamePresent(corporateToken);
                 if (corporateIds.Count == 0)
                 {
-                    CreateCorporate(data);
+                    CreateCorporate(corporateToken);
                 }
-                cid = _service.GetCorporateId(corporateId).FirstOrDefault();
+                corporateId = _service.GetCorporateId(corporateToken).FirstOrDefault();
             }
             else return BadRequest("Corporate ID is required");
 
-            string branchId = data.SelectToken("personalInformation.bid")?.Value<string>() ?? "";
-            if (branchId != "")
+            string branchToken = data.SelectToken("personalInformation.branchId")?.Value<string>() ?? "";
+            if (branchToken != "")
             {
-                var branchIds = _service.CheckBranchNamePresent(branchId);
+                var branchIds = _service.CheckBranchNamePresent(branchToken);
                 if (branchIds.Count == 0)
                 {
-                    CreateBranch(data, cid);
+                    CreateBranch(branchToken, corporateId);
                 }
             }
             else return BadRequest("Branch ID is required");
 
-            var result = RegisterUser(data, corporateId, branchId, DobSample);
-
-            return Ok(result);
+            return RegisterUser(data, corporateId, branchToken, DobSample);
         }
 
         [HttpPost]
@@ -235,12 +233,11 @@ namespace HealthScanAPI.Controllers
             return Ok(result);
         }
 
-        private void CreateCorporate(JObject data)
+        private void CreateCorporate(string corporateId)
         {
-            var tokenizedName = data.SelectToken("personalInformation.cid")?.Value<string>() ?? "";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@cname", tokenizedName),
+                new SqlParameter("@cname", corporateId),
                 new SqlParameter("@cid", ""),
                 new SqlParameter("@caddress", "Address"),
                 new SqlParameter("@ccity", "City"),
@@ -258,12 +255,12 @@ namespace HealthScanAPI.Controllers
             };
             _service.CommonStoredProcedureMethod("usp_createCorporate", parameters.ToArray());
         }
-        private void CreateBranch(JObject data, int cid)
+        private void CreateBranch(string branchId, string corporateId)
         {
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@cid", cid),
-                new SqlParameter("@bname", data.SelectToken("personalInformation.branchName")?.Value<string>() ?? ""),
+                new SqlParameter("@cid", corporateId),
+                new SqlParameter("@bname", branchId),
                 new SqlParameter("@baddress", "Address"),
                 new SqlParameter("@bcity", "City"),
                 new SqlParameter("@bstate", "State"),
@@ -273,7 +270,7 @@ namespace HealthScanAPI.Controllers
                 new SqlParameter("@bphone", "Phone"),
                 new SqlParameter("@bmobile", "Mobile"),
                 new SqlParameter("@bemail", "Email"),
-                new SqlParameter("@bscantype", "ScanType"),
+                new SqlParameter("@bscantype", "SCT001"),
                 new SqlParameter("@bvaliddays", 0),
                 new SqlParameter("@bstatus", true),
                 new SqlParameter("@bevent", "Event"),

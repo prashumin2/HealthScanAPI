@@ -42,11 +42,11 @@ namespace HealthScanAPI.Services
                 return context.Corporates.Where(x => x.CorporateName == corporateId).Select(x => x.CorporateName).ToList();
             }
         }
-        public List<int> GetCorporateId(string corporateId)
+        public List<string> GetCorporateId(string corporateId)
         {
             using (var context = new HealthScanDBContext())
             {
-                return context.Corporates.Where(x => x.CorporateName == corporateId).Select(x => x.Cid).ToList();
+                return context.Corporates.Where(x => x.CorporateName == corporateId).Select(x => x.CorporateId).ToList();
             }
         }
         public List<string> CheckBranchNamePresent(string branchId)
