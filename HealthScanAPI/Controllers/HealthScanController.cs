@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 
@@ -58,24 +59,26 @@ namespace HealthScanAPI.Controllers
             int age = data.SelectToken("personalInformation.age")?.Value<int>() ?? 0;
             DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
 
+            int cid = 0;
             string corporateId = data.SelectToken("personalInformation.cid")?.Value<string>() ?? "";
             if (corporateId != "")
             {
-                var corporateIds = _service.CheckCorporateIdPresent(corporateId);
+                var corporateIds = _service.CheckCorporateNamePresent(corporateId);
                 if (corporateIds.Count == 0)
                 {
                     CreateCorporate(data);
                 }
+                cid = _service.GetCorporateId(corporateId).FirstOrDefault();
             }
             else return BadRequest("Corporate ID is required");
 
             string branchId = data.SelectToken("personalInformation.bid")?.Value<string>() ?? "";
             if (branchId != "")
             {
-                var branchIds = _service.CheckBranchIdPresent(branchId);
+                var branchIds = _service.CheckBranchNamePresent(branchId);
                 if (branchIds.Count == 0)
                 {
-                    CreateBranch(data);
+                    CreateBranch(data, cid);
                 }
             }
             else return BadRequest("Branch ID is required");
@@ -234,46 +237,47 @@ namespace HealthScanAPI.Controllers
 
         private void CreateCorporate(JObject data)
         {
+            var tokenizedName = data.SelectToken("personalInformation.cid")?.Value<string>() ?? "";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@cname", data.SelectToken("personalInformation.corporateName")?.Value<string>() ?? ""),
-                new SqlParameter("@cid", data.SelectToken("personalInformation.cid")?.Value<string>() ?? ""),
-                new SqlParameter("@caddress", data.SelectToken("personalInformation.corporateAddress")?.Value<string>() ?? ""),
-                new SqlParameter("@ccity", data.SelectToken("personalInformation.corporateCity")?.Value<string>() ?? ""),
-                new SqlParameter("@cstate", data.SelectToken("personalInformation.corporateState")?.Value<string>() ?? ""),
-                new SqlParameter("@cpin", data.SelectToken("personalInformation.corporatePin")?.Value<string>() ?? ""),
-                new SqlParameter("@ccountry", data.SelectToken("personalInformation.corporateCountry")?.Value<string>() ?? ""),
-                new SqlParameter("@cperson", data.SelectToken("personalInformation.corporateContactPerson")?.Value<string>() ?? ""),
-                new SqlParameter("@cphone", data.SelectToken("personalInformation.corporatePhone")?.Value<string>() ?? ""),
-                new SqlParameter("@cmobile", data.SelectToken("personalInformation.corporateMobile")?.Value<string>() ?? ""),
-                new SqlParameter("@cemail", data.SelectToken("personalInformation.corporateEmail")?.Value<string>() ?? ""),
-                new SqlParameter("@curl", data.SelectToken("personalInformation.corporateWebsite")?.Value<string>() ?? ""),
-                new SqlParameter("@cscantype", data.SelectToken("personalInformation.corporateScanType")?.Value<string>() ?? ""),
-                new SqlParameter("@cvaliddays", data.SelectToken("personalInformation.corporateDays")?.Value<int>() ?? 0),
-                new SqlParameter("@cstatus", data.SelectToken("personalInformation.corporateStatus")?.Value<bool>() ?? false)
+                new SqlParameter("@cname", tokenizedName),
+                new SqlParameter("@cid", ""),
+                new SqlParameter("@caddress", "Address"),
+                new SqlParameter("@ccity", "City"),
+                new SqlParameter("@cstate", "State"),
+                new SqlParameter("@cpin", "Pin"),
+                new SqlParameter("@ccountry", "Country"),
+                new SqlParameter("@cperson", "ContactPerson"),
+                new SqlParameter("@cphone", "Phone"),
+                new SqlParameter("@cmobile", "Mobile"),
+                new SqlParameter("@cemail", "Email"),
+                new SqlParameter("@curl", "URL"),
+                new SqlParameter("@cscantype", "ScanType"),
+                new SqlParameter("@cvaliddays", 0),
+                new SqlParameter("@cstatus", true)
             };
             _service.CommonStoredProcedureMethod("usp_createCorporate", parameters.ToArray());
         }
-        private void CreateBranch(JObject data)
+        private void CreateBranch(JObject data, int cid)
         {
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@cid", data.SelectToken("personalInformation.cid")?.Value<string>() ?? ""),
+                new SqlParameter("@cid", cid),
                 new SqlParameter("@bname", data.SelectToken("personalInformation.branchName")?.Value<string>() ?? ""),
-                new SqlParameter("@baddress", data.SelectToken("personalInformation.branchAddress")?.Value<string>() ?? ""),
-                new SqlParameter("@bcity", data.SelectToken("personalInformation.branchCity")?.Value<string>() ?? ""),
-                new SqlParameter("@bstate", data.SelectToken("personalInformation.branchState")?.Value<string>() ?? ""),
-                new SqlParameter("@bpin", data.SelectToken("personalInformation.branchPin")?.Value<string>() ?? ""),
-                new SqlParameter("@bcountry", data.SelectToken("personalInformation.branchCountry")?.Value<string>() ?? ""),
-                new SqlParameter("@bperson", data.SelectToken("personalInformation.branchPerson")?.Value<string>() ?? ""),
-                new SqlParameter("@bphone", data.SelectToken("personalInformation.branchPhone")?.Value<string>() ?? ""),
-                new SqlParameter("@bmobile", data.SelectToken("personalInformation.branchMobile")?.Value<string>() ?? ""),
-                new SqlParameter("@bemail", data.SelectToken("personalInformation.branchEmail")?.Value<string>() ?? ""),
-                new SqlParameter("@bscantype", data.SelectToken("personalInformation.branchScanType")?.Value<string>() ?? ""),
-                new SqlParameter("@bvaliddays", data.SelectToken("personalInformation.branchDays")?.Value<int>() ?? 0),
-                new SqlParameter("@bstatus", data.SelectToken("personalInformation.branchStatus")?.Value<bool>() ?? true),
-                new SqlParameter("@bevent", data.SelectToken("personalInformation.branchEventType")?.Value<string>() ?? ""),
-                new SqlParameter("@beventdate", data.SelectToken("personalInformation.branchEventDate")?.Value<string>() ?? "")
+                new SqlParameter("@baddress", "Address"),
+                new SqlParameter("@bcity", "City"),
+                new SqlParameter("@bstate", "State"),
+                new SqlParameter("@bpin", "Pin"),
+                new SqlParameter("@bcountry", "Country"),
+                new SqlParameter("@bperson", "Person"),
+                new SqlParameter("@bphone", "Phone"),
+                new SqlParameter("@bmobile", "Mobile"),
+                new SqlParameter("@bemail", "Email"),
+                new SqlParameter("@bscantype", "ScanType"),
+                new SqlParameter("@bvaliddays", 0),
+                new SqlParameter("@bstatus", true),
+                new SqlParameter("@bevent", "Event"),
+                new SqlParameter("@beventdate", "Date")
             };
             _service.CommonStoredProcedureMethod("usp_createBranch", parameters.ToArray());
         }

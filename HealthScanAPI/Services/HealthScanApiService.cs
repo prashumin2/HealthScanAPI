@@ -35,18 +35,25 @@ namespace HealthScanAPI.Services
             return dt;
         }
 
-        public List<string> CheckCorporateIdPresent(string corporateId)
+        public List<string> CheckCorporateNamePresent(string corporateId)
         {
             using (var context = new HealthScanDBContext())
             {
-                return context.Corporates.Where(x => x.CorporateId == corporateId).Select(x => x.CorporateId).ToList();
+                return context.Corporates.Where(x => x.CorporateName == corporateId).Select(x => x.CorporateName).ToList();
             }
         }
-        public List<string> CheckBranchIdPresent(string branchId)
+        public List<int> GetCorporateId(string corporateId)
         {
             using (var context = new HealthScanDBContext())
             {
-                return context.Branches.Where(x => x.BranchId == branchId).Select(x => x.BranchId).ToList();
+                return context.Corporates.Where(x => x.CorporateName == corporateId).Select(x => x.Cid).ToList();
+            }
+        }
+        public List<string> CheckBranchNamePresent(string branchId)
+        {
+            using (var context = new HealthScanDBContext())
+            {
+                return context.Branches.Where(x => x.BranchName == branchId).Select(x => x.BranchName).ToList();
             }
         }
     }
