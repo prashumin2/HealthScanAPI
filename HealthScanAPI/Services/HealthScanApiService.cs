@@ -56,12 +56,5 @@ namespace HealthScanAPI.Services
                 return context.Branches.Where(x => x.BranchName == branchId).Select(x => x.BranchName).ToList();
             }
         }
-        public List<string> GetBranchId(string branchId)
-        {
-            using (var context = new HealthScanDBContext())
-            {
-                return context.Branches.Where(x => x.BranchName == branchId).Select(x => x.BranchId).ToList();
-            }
-        }
     }
 }
