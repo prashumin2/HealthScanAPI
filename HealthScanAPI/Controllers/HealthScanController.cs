@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using HealthScanAPI.Models.DatabaseModels;
+using HealthScanAPI.Services;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using HealthScanAPI.Services;
 using System.Data.SqlClient;
 using System.Web.Http;
+using System.Web.Http.Results;
 
 namespace HealthScanAPI.Controllers
 {
@@ -62,7 +64,7 @@ namespace HealthScanAPI.Controllers
                 var corporateIds = _service.CheckCorporateIdPresent(corporateId);
                 if (corporateIds.Count == 0)
                 {
-                    InsertCorporate(data);
+                    CreateCorporate(data);
                 }
             }
             else return BadRequest("Corporate ID is required");
@@ -73,93 +75,12 @@ namespace HealthScanAPI.Controllers
                 var branchIds = _service.CheckBranchIdPresent(branchId);
                 if (branchIds.Count == 0)
                 {
-                    InsertBranch(data);
+                    CreateBranch(data);
                 }
             }
             else return BadRequest("Branch ID is required");
 
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@cid", corporateId),
-                //new SqlParameter("@bid", branchId),
-                new SqlParameter("@bid", data.SelectToken("personalInformation.bid")?.Value<string>() ?? "BRA0002"),
-                new SqlParameter("@fname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
-                new SqlParameter("@lname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
-                new SqlParameter("@rmobile", data.SelectToken("personalInformation.mobile")?.Value<string>() ?? ""),
-                new SqlParameter("@rDOB", DobSample),
-                new SqlParameter("@remail", data.SelectToken("personalInformation.email")?.Value<string>() ?? ""),
-                new SqlParameter("@rextmobile", data.SelectToken("personalInformation.extmobile")?.Value<string>() ?? "+91"),
-                new SqlParameter("@gender", data.SelectToken("personalInformation.gender")?.Value<bool>() ?? false),
-                new SqlParameter("@empid", data.SelectToken("personalInformation.employeeId")?.Value<string>() ?? ""),
-                new SqlParameter("@empidtype", data.SelectToken("personalInformation.empidtype")?.Value<int>() ?? 0),
-                new SqlParameter("@usertype", data.SelectToken("personalInformation.usertype")?.Value<int>() ?? 0),
-                new SqlParameter("@passw", data.SelectToken("personalInformation.passw")?.Value<string>() ?? ""),
-                new SqlParameter("@deptid", data.SelectToken("personalInformation.deptid")?.Value<string>() ?? "DEP0010"),
-                new SqlParameter("@desgid", data.SelectToken("personalInformation.desgid")?.Value<string>() ?? "DEG001000"),
-                new SqlParameter("@descent", data.SelectToken("personalInformation.descent")?.Value<string>() ?? "INDIAN"),
-                new SqlParameter("@httype", data.SelectToken("physicalTest.httype")?.Value<string>() ?? "C"),
-                new SqlParameter("@htFt", data.SelectToken("physicalTest.height")?.Value<float>() ?? 0),
-                new SqlParameter("@htIn", "0"),
-                new SqlParameter("@wttype", data.SelectToken("physicalTest.weightType")?.Value<string>() ?? "K"),
-                new SqlParameter("@wt", data.SelectToken("physicalTest.weight")?.Value<int>() ?? 0),
-                new SqlParameter("@pulse", data.SelectToken("physicalTest.pulse")?.Value<int>() ?? 0),
-                new SqlParameter("@peak", "0"),
-                new SqlParameter("@waist", data.SelectToken("physicalTest.waist")?.Value<int>() ?? 0),
-                new SqlParameter("@breath", data.SelectToken("physicalTest.breathRetention")?.Value<int>() ?? 0),
-                new SqlParameter("@temp", "0"),
-                new SqlParameter("@spo", "0"),
-                new SqlParameter("@lq1", data.SelectToken("lifestyle.dailyFruitsOrVegetables")?.Value<int>() ?? 0),
-                new SqlParameter("@lq2", data.SelectToken("lifestyle.milkCurdEggsWeekly")?.Value<int>() ?? 0),
-                new SqlParameter("@lq3", data.SelectToken("lifestyle.waterIntakeGlassesPerDay")?.Value<int>() ?? 0),
-                new SqlParameter("@lq4", data.SelectToken("lifestyle.frequentJunkFood")?.Value<int>() ?? 0),
-                new SqlParameter("@lq5", data.SelectToken("lifestyle.dailyExercise")?.Value<int>() ?? 0),
-                new SqlParameter("@lq6", data.SelectToken("lifestyle.toeTouch")?.Value<int>() ?? 0),
-                new SqlParameter("@lq7", data.SelectToken("lifestyle.pushUpsSitUps")?.Value<int>() ?? 0),
-                new SqlParameter("@lq8", data.SelectToken("lifestyle.jobSatisfaction")?.Value<int>() ?? 0),
-                new SqlParameter("@lq9", data.SelectToken("lifestyle.goodHomeSituation")?.Value<int>() ?? 0),
-                new SqlParameter("@lq10", data.SelectToken("lifestyle.majorProblems")?.Value<int>() ?? 0),
-                new SqlParameter("@lq11", data.SelectToken("lifestyle.sufficientSleep")?.Value<int>() ?? 0),
-                new SqlParameter("@lq12", "0"),
-                new SqlParameter("@lq13", data.SelectToken("lifestyle.smoking")?.Value<int>() ?? 0),
-                new SqlParameter("@lq14", data.SelectToken("lifestyle.oralTobacco")?.Value<int>() ?? 0),
-                new SqlParameter("@lq15", "0"),
-                new SqlParameter("@llq1", data.SelectToken("lifestyle.meatChickenFishWeekly")?.Value<int>() ?? 0),
-                new SqlParameter("@llq2", data.SelectToken("lifestyle.cerealsWeekly")?.Value<int>() ?? 0),
-                new SqlParameter("@llq3", data.SelectToken("lifestyle.mineralVitaminSupplements")?.Value<int>() ?? 0),
-                new SqlParameter("@llq4", data.SelectToken("mental.nervous")?.Value<int>() ?? 0),
-                new SqlParameter("@llq5", data.SelectToken("mental.worrying")?.Value<int>() ?? 0),
-                new SqlParameter("@llq6", data.SelectToken("mental.intrest")?.Value<int>() ?? 0),
-                new SqlParameter("@llq7", data.SelectToken("mental.feeling")?.Value<int>() ?? 0),
-                new SqlParameter("@mq1", data.SelectToken("familyMedicalHistory.parentsOrGrandparentsBP_Sugar_Cardiac")?.Value<int>() ?? 0),
-                new SqlParameter("@mq2", data.SelectToken("medicalDetails.currentMedication")?.Value<int>() ?? 0),
-                new SqlParameter("@mq1r", data.SelectToken("familyMedicalHistory.familyMedicalReason")?.Value<string>() ?? ""),
-                new SqlParameter("@mq2r", data.SelectToken("medicalDetails.medicationReason")?.Value<int>() ?? 0),
-                new SqlParameter("@mq2rs", data.SelectToken("medicalDetails.medicationReason2")?.Value<string>() ?? ""),
-                new SqlParameter("@mqbp1", data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbp2", data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbs1", data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbs2", data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<int>() ?? 0),
-                new SqlParameter("@mqtc", data.SelectToken("medicalDetails.totalCholesterol")?.Value<int>() ?? 0),
-                new SqlParameter("@q1", data.SelectToken("medicalDetails.headache")?.Value<int>() ?? 0),
-                new SqlParameter("@q2", data.SelectToken("medicalDetails.respiratoryAilments")?.Value<int>() ?? 0),
-                new SqlParameter("@q3", "0"),
-                new SqlParameter("@q4", data.SelectToken("medicalDetails.musculoskeletalProblems")?.Value<int>() ?? 0),
-                new SqlParameter("@q5", "0"),
-                new SqlParameter("@q6", "0"),
-                new SqlParameter("@q1r", data.SelectToken("medicalDetails.headacheReason")?.Value<string>() ?? ""),
-                new SqlParameter("@q2r", data.SelectToken("medicalDetails.respiratoryAilmentsReason")?.Value<string>() ?? ""),
-                new SqlParameter("@q3r", ""),
-                new SqlParameter("@q4r", data.SelectToken("medicalDetails.musculoskeletalProblemsReason")?.Value<string>() ?? ""),
-                new SqlParameter("@q5r", ""),
-                new SqlParameter("@q6r", ""),
-                new SqlParameter("@cq1", data.SelectToken("organization.insuranceProvided")?.Value<int>() ?? 0),
-                new SqlParameter("@cq2", data.SelectToken("organization.annualHealthScreening")?.Value<int>() ?? 0),
-                new SqlParameter("@cq3", data.SelectToken("organization.healthyCanteen")?.Value<int>() ?? 0),
-                new SqlParameter("@cq4", data.SelectToken("organization.sportsFacility")?.Value<int>() ?? 0),
-                new SqlParameter("@cq5", data.SelectToken("organization.healthEducation")?.Value<int>() ?? 0)
-            };
-
-            var result = _service.CommonStoredProcedureMethod("usp_registeruserAPITemp", parameters.ToArray());
+            var result = RegisterUser(data, corporateId, branchId, DobSample);
 
             return Ok(result);
         }
@@ -311,7 +232,7 @@ namespace HealthScanAPI.Controllers
             return Ok(result);
         }
 
-        private void InsertCorporate(JObject data)
+        private void CreateCorporate(JObject data)
         {
             var parameters = new List<SqlParameter>
             {
@@ -333,8 +254,7 @@ namespace HealthScanAPI.Controllers
             };
             _service.CommonStoredProcedureMethod("usp_createCorporate", parameters.ToArray());
         }
-
-        private void InsertBranch(JObject data)
+        private void CreateBranch(JObject data)
         {
             var parameters = new List<SqlParameter>
             {
@@ -356,6 +276,92 @@ namespace HealthScanAPI.Controllers
                 new SqlParameter("@beventdate", data.SelectToken("personalInformation.branchEventDate")?.Value<string>() ?? "")
             };
             _service.CommonStoredProcedureMethod("usp_createBranch", parameters.ToArray());
+        }
+        private IHttpActionResult RegisterUser(JObject data, string corporateId, string branchId, DateTime DobSample)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@cid", corporateId),
+                //new SqlParameter("@bid", branchId),
+                new SqlParameter("@bid", data.SelectToken("personalInformation.bid")?.Value<string>() ?? "BRA0002"),
+                new SqlParameter("@fname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
+                new SqlParameter("@lname", data.SelectToken("personalInformation.name")?.Value<string>() ?? ""),
+                new SqlParameter("@rmobile", data.SelectToken("personalInformation.mobile")?.Value<string>() ?? ""),
+                new SqlParameter("@rDOB", DobSample),
+                new SqlParameter("@remail", data.SelectToken("personalInformation.email")?.Value<string>() ?? ""),
+                new SqlParameter("@rextmobile", data.SelectToken("personalInformation.extmobile")?.Value<string>() ?? "+91"),
+                new SqlParameter("@gender", data.SelectToken("personalInformation.gender")?.Value<bool>() ?? false),
+                new SqlParameter("@empid", data.SelectToken("personalInformation.employeeId")?.Value<string>() ?? ""),
+                new SqlParameter("@empidtype", data.SelectToken("personalInformation.empidtype")?.Value<int>() ?? 0),
+                new SqlParameter("@usertype", data.SelectToken("personalInformation.usertype")?.Value<int>() ?? 0),
+                new SqlParameter("@passw", data.SelectToken("personalInformation.passw")?.Value<string>() ?? ""),
+                new SqlParameter("@deptid", data.SelectToken("personalInformation.deptid")?.Value<string>() ?? "DEP0010"),
+                new SqlParameter("@desgid", data.SelectToken("personalInformation.desgid")?.Value<string>() ?? "DEG001000"),
+                new SqlParameter("@descent", data.SelectToken("personalInformation.descent")?.Value<string>() ?? "INDIAN"),
+                new SqlParameter("@httype", data.SelectToken("physicalTest.httype")?.Value<string>() ?? "C"),
+                new SqlParameter("@htFt", data.SelectToken("physicalTest.height")?.Value<float>() ?? 0),
+                new SqlParameter("@htIn", "0"),
+                new SqlParameter("@wttype", data.SelectToken("physicalTest.weightType")?.Value<string>() ?? "K"),
+                new SqlParameter("@wt", data.SelectToken("physicalTest.weight")?.Value<int>() ?? 0),
+                new SqlParameter("@pulse", data.SelectToken("physicalTest.pulse")?.Value<int>() ?? 0),
+                new SqlParameter("@peak", "0"),
+                new SqlParameter("@waist", data.SelectToken("physicalTest.waist")?.Value<int>() ?? 0),
+                new SqlParameter("@breath", data.SelectToken("physicalTest.breathRetention")?.Value<int>() ?? 0),
+                new SqlParameter("@temp", "0"),
+                new SqlParameter("@spo", "0"),
+                new SqlParameter("@lq1", data.SelectToken("lifestyle.dailyFruitsOrVegetables")?.Value<int>() ?? 0),
+                new SqlParameter("@lq2", data.SelectToken("lifestyle.milkCurdEggsWeekly")?.Value<int>() ?? 0),
+                new SqlParameter("@lq3", data.SelectToken("lifestyle.waterIntakeGlassesPerDay")?.Value<int>() ?? 0),
+                new SqlParameter("@lq4", data.SelectToken("lifestyle.frequentJunkFood")?.Value<int>() ?? 0),
+                new SqlParameter("@lq5", data.SelectToken("lifestyle.dailyExercise")?.Value<int>() ?? 0),
+                new SqlParameter("@lq6", data.SelectToken("lifestyle.toeTouch")?.Value<int>() ?? 0),
+                new SqlParameter("@lq7", data.SelectToken("lifestyle.pushUpsSitUps")?.Value<int>() ?? 0),
+                new SqlParameter("@lq8", data.SelectToken("lifestyle.jobSatisfaction")?.Value<int>() ?? 0),
+                new SqlParameter("@lq9", data.SelectToken("lifestyle.goodHomeSituation")?.Value<int>() ?? 0),
+                new SqlParameter("@lq10", data.SelectToken("lifestyle.majorProblems")?.Value<int>() ?? 0),
+                new SqlParameter("@lq11", data.SelectToken("lifestyle.sufficientSleep")?.Value<int>() ?? 0),
+                new SqlParameter("@lq12", "0"),
+                new SqlParameter("@lq13", data.SelectToken("lifestyle.smoking")?.Value<int>() ?? 0),
+                new SqlParameter("@lq14", data.SelectToken("lifestyle.oralTobacco")?.Value<int>() ?? 0),
+                new SqlParameter("@lq15", "0"),
+                new SqlParameter("@llq1", data.SelectToken("lifestyle.meatChickenFishWeekly")?.Value<int>() ?? 0),
+                new SqlParameter("@llq2", data.SelectToken("lifestyle.cerealsWeekly")?.Value<int>() ?? 0),
+                new SqlParameter("@llq3", data.SelectToken("lifestyle.mineralVitaminSupplements")?.Value<int>() ?? 0),
+                new SqlParameter("@llq4", data.SelectToken("mental.nervous")?.Value<int>() ?? 0),
+                new SqlParameter("@llq5", data.SelectToken("mental.worrying")?.Value<int>() ?? 0),
+                new SqlParameter("@llq6", data.SelectToken("mental.intrest")?.Value<int>() ?? 0),
+                new SqlParameter("@llq7", data.SelectToken("mental.feeling")?.Value<int>() ?? 0),
+                new SqlParameter("@mq1", data.SelectToken("familyMedicalHistory.parentsOrGrandparentsBP_Sugar_Cardiac")?.Value<int>() ?? 0),
+                new SqlParameter("@mq2", data.SelectToken("medicalDetails.currentMedication")?.Value<int>() ?? 0),
+                new SqlParameter("@mq1r", data.SelectToken("familyMedicalHistory.familyMedicalReason")?.Value<string>() ?? ""),
+                new SqlParameter("@mq2r", data.SelectToken("medicalDetails.medicationReason")?.Value<int>() ?? 0),
+                new SqlParameter("@mq2rs", data.SelectToken("medicalDetails.medicationReason2")?.Value<string>() ?? ""),
+                new SqlParameter("@mqbp1", data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0),
+                new SqlParameter("@mqbp2", data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0),
+                new SqlParameter("@mqbs1", data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<int>() ?? 0),
+                new SqlParameter("@mqbs2", data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<int>() ?? 0),
+                new SqlParameter("@mqtc", data.SelectToken("medicalDetails.totalCholesterol")?.Value<int>() ?? 0),
+                new SqlParameter("@q1", data.SelectToken("medicalDetails.headache")?.Value<int>() ?? 0),
+                new SqlParameter("@q2", data.SelectToken("medicalDetails.respiratoryAilments")?.Value<int>() ?? 0),
+                new SqlParameter("@q3", "0"),
+                new SqlParameter("@q4", data.SelectToken("medicalDetails.musculoskeletalProblems")?.Value<int>() ?? 0),
+                new SqlParameter("@q5", "0"),
+                new SqlParameter("@q6", "0"),
+                new SqlParameter("@q1r", data.SelectToken("medicalDetails.headacheReason")?.Value<string>() ?? ""),
+                new SqlParameter("@q2r", data.SelectToken("medicalDetails.respiratoryAilmentsReason")?.Value<string>() ?? ""),
+                new SqlParameter("@q3r", ""),
+                new SqlParameter("@q4r", data.SelectToken("medicalDetails.musculoskeletalProblemsReason")?.Value<string>() ?? ""),
+                new SqlParameter("@q5r", ""),
+                new SqlParameter("@q6r", ""),
+                new SqlParameter("@cq1", data.SelectToken("organization.insuranceProvided")?.Value<int>() ?? 0),
+                new SqlParameter("@cq2", data.SelectToken("organization.annualHealthScreening")?.Value<int>() ?? 0),
+                new SqlParameter("@cq3", data.SelectToken("organization.healthyCanteen")?.Value<int>() ?? 0),
+                new SqlParameter("@cq4", data.SelectToken("organization.sportsFacility")?.Value<int>() ?? 0),
+                new SqlParameter("@cq5", data.SelectToken("organization.healthEducation")?.Value<int>() ?? 0)
+            };
+
+            var result = _service.CommonStoredProcedureMethod("usp_registeruserAPITemp", parameters.ToArray());
+            return Ok(result);
         }
     }
 }
