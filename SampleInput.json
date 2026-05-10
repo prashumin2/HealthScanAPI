@@ -18,6 +18,9 @@
     "familyMedicalReason": null
   },
   "medicalDetails": {
+    "bloodPressureFlag": null,
+    "bloodSugarFlag": null,
+    "cholesterolFlag":  null,
     "bloodPressureSystolic": null,
     "bloodPressureDiastolic": null,
     "bloodSugarFasting": null,

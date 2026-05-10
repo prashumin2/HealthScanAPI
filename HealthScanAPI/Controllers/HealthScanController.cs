@@ -283,6 +283,31 @@ namespace HealthScanAPI.Controllers
         }
         private IHttpActionResult RegisterUser(JObject data, string corporateId, string branchId, DateTime DobSample)
         {
+            var bpDiastolic = data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0;
+            var bpSystolic = data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0;
+            var bpFlag = data.SelectToken("medicalDetails.bloodPressureFlag")?.Value<int>() ?? null;
+
+            if (bpFlag == 1 && (bpDiastolic == 0 || bpSystolic == 0))
+            {
+                return BadRequest("Both Blood Pressure values are required when Blood Pressure Flag is set to 1");
+            }
+
+            var bsFlag = data.SelectToken("medicalDetails.bloodSugarFlag")?.Value<int>() ?? null;
+            var bsFasting = data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<int>() ?? 0;
+            var bsRandom = data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<int>() ?? 0;
+
+            if (bsFlag == 1 && (bsFasting != 0 && bsRandom != 0))
+            {
+                return BadRequest("Either of the Blood Sugar values are required when Blood Sugar Flag is set to 1");
+            }
+
+            var cholesterolFlag = data.SelectToken("medicalDetails.cholesterolFlag")?.Value<int>() ?? null;
+            var cholesterolValue = data.SelectToken("medicalDetails.totalCholesterol")?.Value<int>() ?? 0;
+            if (cholesterolFlag == 1 && cholesterolValue == 0)
+            {
+                return BadRequest("Cholestrol Value cannot be null when Cholestrol Flag is set to 1");
+            }
+
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@cid", corporateId),
@@ -300,7 +325,7 @@ namespace HealthScanAPI.Controllers
                 new SqlParameter("@passw", data.SelectToken("personalInformation.passw")?.Value<string>() ?? ""),
                 new SqlParameter("@deptid", data.SelectToken("personalInformation.deptid")?.Value<string>() ?? "DEP0010"),
                 new SqlParameter("@desgid", data.SelectToken("personalInformation.desgid")?.Value<string>() ?? "DEG001000"),
-                new SqlParameter("@descent", data.SelectToken("personalInformation.descent")?.Value<string>() ?? "INDIAN"),
+                new SqlParameter("@descent", data.SelectToken("personalInformation.descent")?.Value<string>() ?? "1"),
                 new SqlParameter("@httype", data.SelectToken("physicalTest.httype")?.Value<string>() ?? "C"),
                 new SqlParameter("@htFt", data.SelectToken("physicalTest.height")?.Value<float>() ?? 0),
                 new SqlParameter("@htIn", "0"),
@@ -334,16 +359,19 @@ namespace HealthScanAPI.Controllers
                 new SqlParameter("@llq5", data.SelectToken("mental.worrying")?.Value<int>() ?? 0),
                 new SqlParameter("@llq6", data.SelectToken("mental.intrest")?.Value<int>() ?? 0),
                 new SqlParameter("@llq7", data.SelectToken("mental.feeling")?.Value<int>() ?? 0),
+                new SqlParameter("@BPNW", bpFlag),
+                new SqlParameter("@DIANW", bsFlag),
+                new SqlParameter("@CHONW", cholesterolFlag),
                 new SqlParameter("@mq1", data.SelectToken("familyMedicalHistory.parentsOrGrandparentsBP_Sugar_Cardiac")?.Value<int>() ?? 0),
                 new SqlParameter("@mq2", data.SelectToken("medicalDetails.currentMedication")?.Value<int>() ?? 0),
                 new SqlParameter("@mq1r", data.SelectToken("familyMedicalHistory.familyMedicalReason")?.Value<string>() ?? ""),
                 new SqlParameter("@mq2r", data.SelectToken("medicalDetails.medicationReason")?.Value<int>() ?? 0),
                 new SqlParameter("@mq2rs", data.SelectToken("medicalDetails.medicationReason2")?.Value<string>() ?? ""),
-                new SqlParameter("@mqbp1", data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbp2", data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbs1", data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<int>() ?? 0),
-                new SqlParameter("@mqbs2", data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<int>() ?? 0),
-                new SqlParameter("@mqtc", data.SelectToken("medicalDetails.totalCholesterol")?.Value<int>() ?? 0),
+                new SqlParameter("@mqbp1", bpSystolic),
+                new SqlParameter("@mqbp2", bpDiastolic),
+                new SqlParameter("@mqbs1", bsFasting),
+                new SqlParameter("@mqbs2", bsRandom),
+                new SqlParameter("@mqtc", cholesterolValue),
                 new SqlParameter("@q1", data.SelectToken("medicalDetails.headache")?.Value<int>() ?? 0),
                 new SqlParameter("@q2", data.SelectToken("medicalDetails.respiratoryAilments")?.Value<int>() ?? 0),
                 new SqlParameter("@q3", "0"),
