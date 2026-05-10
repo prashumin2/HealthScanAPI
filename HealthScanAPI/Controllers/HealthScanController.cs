@@ -285,14 +285,14 @@ namespace HealthScanAPI.Controllers
 
             var bpDiastolic = data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0;
             var bpSystolic = data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0;
-            var bpFlag = data.SelectToken("medicalDetails.bloodPressureFlag")?.Value<int>() ?? null;
+            var bpFlag = data.SelectToken("medicalDetails.bloodPressureFlag")?.Value<int>() ?? 0;
 
             if (bpFlag == 1 && (bpDiastolic == 0 || bpSystolic == 0))
             {
                 return BadRequest("Both Blood Pressure values are required when Blood Pressure Flag is set to 1");
             }
 
-            var bsFlag = data.SelectToken("medicalDetails.bloodSugarFlag")?.Value<int>() ?? null;
+            var bsFlag = data.SelectToken("medicalDetails.bloodSugarFlag")?.Value<int>() ?? 0;
             var bsFasting = data.SelectToken("medicalDetails.bloodSugarFasting")?.Value<int>() ?? 0;
             var bsRandom = data.SelectToken("medicalDetails.bloodSugarRandom")?.Value<int>() ?? 0;
 
@@ -301,7 +301,7 @@ namespace HealthScanAPI.Controllers
                 return BadRequest("Either of the Blood Sugar values are required when Blood Sugar Flag is set to 1");
             }
 
-            var cholesterolFlag = data.SelectToken("medicalDetails.cholesterolFlag")?.Value<int>() ?? null;
+            var cholesterolFlag = data.SelectToken("medicalDetails.cholesterolFlag")?.Value<int>() ?? 0;
             var cholesterolValue = data.SelectToken("medicalDetails.totalCholesterol")?.Value<int>() ?? 0;
             if (cholesterolFlag == 1 && cholesterolValue == 0)
             {
