@@ -56,9 +56,6 @@ namespace HealthScanAPI.Controllers
             if (data == null)
                 return BadRequest("Invalid JSON");
 
-            int age = data.SelectToken("personalInformation.age")?.Value<int>() ?? 0;
-            DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
-
             string corporateId = "";
             string branchId = "";
 
@@ -86,7 +83,7 @@ namespace HealthScanAPI.Controllers
             }
             else return BadRequest("Branch ID is required");
 
-            return RegisterUser(data, corporateId, branchId, DobSample);
+            return RegisterUser(data, corporateId, branchId);
         }
 
         [HttpPost]
@@ -281,8 +278,11 @@ namespace HealthScanAPI.Controllers
             };
             _service.CommonStoredProcedureMethod("usp_createBranch", parameters.ToArray());
         }
-        private IHttpActionResult RegisterUser(JObject data, string corporateId, string branchId, DateTime DobSample)
+        private IHttpActionResult RegisterUser(JObject data, string corporateId, string branchId)
         {
+            int age = data.SelectToken("personalInformation.age")?.Value<int>() ?? 0;
+            DateTime DobSample = new DateTime(DateTime.Now.Year - age, 1, 1);
+
             var bpDiastolic = data.SelectToken("medicalDetails.bloodPressureDiastolic")?.Value<int>() ?? 0;
             var bpSystolic = data.SelectToken("medicalDetails.bloodPressureSystolic")?.Value<int>() ?? 0;
             var bpFlag = data.SelectToken("medicalDetails.bloodPressureFlag")?.Value<int>() ?? null;
