@@ -1,12 +1,10 @@
-﻿using HealthScanAPI.Models.DatabaseModels;
-using HealthScanAPI.Services;
+﻿using HealthScanAPI.Services;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace HealthScanAPI.Controllers
 {
